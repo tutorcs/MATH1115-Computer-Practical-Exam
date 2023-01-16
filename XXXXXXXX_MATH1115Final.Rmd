@@ -1,0 +1,159 @@
+---
+title: "MATH1115 Computer Practical Exam"
+output:
+  html_document:
+    number_sections: yes
+    self_contained: yes
+    theme: flatly
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+subtitle: Semester 2, 2022
+---
+
+<style>
+h2 { /* Header 2 */
+    font-size: 22px
+}
+</style>
+
+## MY SID IS: XXXXX {-}
+
+<br>
+
+## Briefing on Data 
+
+The given file, `data.csv`, available on Kaggle, contains information about Audi used cars sold in the U.K. The following data dictionary is reproduced from the source,
+
+- `model`: Audi model.
+
+- `year`: registration year. 
+
+- `price`: price in pounds sterling.
+
+- `transmission`: type of gearbox.
+
+- `mileage`: distance used.
+
+- `fuelType`: engine fuel.
+
+- `tax`: road tax.
+
+- `mpg`: miles per gallon.
+
+- `engineSize`: size in litres.
+
+
+The given file, `data.csv`, is an abridged version of the original dataset, which itself consists of multiple files. 
+
+Your task is to help Haochen analyse the `data.csv` data set, using the template provided `XXXXXXXX_MATH1115Final.Rmd`, where `XXXXXXXX` will be replaced by your SID. This template consists of five main sections:
+
+- Initial Data Analysis
+
+- Simple Linear Regression
+
+- Chi-Squared Test
+
+- Binomial Modelling
+
+- Data Wrangling
+
+&nbsp;
+
+**How to approach the exam**  
+1. Attempt all sections.  
+2. Comment on the code and output (as appropriate).  
+3. Use `ggplot` for all graphs with appropriate labels and legends. You can choose to use base R, but you will not get full marks.  
+4. Neatly edit your work, both code and text, before submission.  
+
+&nbsp;
+
+**Submission**  
+1. Name your final .Rmd file as `XXXXXXXX_MATH1115Final.Rmd`, where `XXXXXXXX` is your SID.    
+2. Create the final .html file.   
+3. Submit your .html and .Rmd files in the MATH1115 Canvas site.   
+
+&nbsp;
+
+```{r}
+data <- read.csv("data.csv")
+```
+
+```{r}
+dim(data)
+```
+
+```{r}
+head(data)
+```
+
+```{r}
+names(data)
+```
+
+## INITIAL DATA ANALYSIS
+
+**Question 1**: Write a short paragraph on the limitations and ethics associated with this data.
+
+**Question 2**: Provide a numerical summary and graphical summary for the variable "price". Write a short paragraph summarising your findings.
+
+**Question 3**: For each of the variables "mpg" and "year", provide a graphical summary using ggplot. Write a short paragraph summarising your findings. 
+
+
+<br>
+
+## SIMPLE LINEAR REGRESSION
+
+**Research Question**: It is to be expected that on average, used cars with greater mileage have a lesser sale price. Haochen claims that for used cars registered in 2009, a negative linear relationship existed between mileage and price. Fit a simple linear regression model and evaluate this claim. Perform any appropriate hypothesis tests and include residual diagnostics. 
+
+<br>
+
+## CHI-SQUARED TEST
+
+**Research Question**: It is claimed that 25% of Audi used cars have automatic transmission, while 40% are manual and a further 35% have semi-automatic transmission. Perform a chi-squared test with \(\ \alpha = 0.05 \)\ to determine the statistical significance of any evidence against this claim. In your answer, use H A T P C.
+
+<br>
+
+## BINOMIAL MODELLING
+
+Haochen believes that at least half of Audi used cars are diesel, with the remaining half being either petrol driven or else hybrid. 
+
+i) Verify that in the given data set, 5577 cars are diesel. 
+
+ii) Model this as sampling from a box model with 10,668 draws with replacement. Calculate the expected value and standard error for the mean of the draws.
+
+iii) Comment on your findings, in context.
+
+<br>
+
+## DATA WRANGLING
+
+Annotate the code below, explaining what each line is doing.
+
+```{r, echo = T, warning = F, message = F, eval = F}
+
+data %>%
+  .$mpg %>%
+  hist
+
+
+data %>%
+  select("year") %>%
+  table %>%
+  sort
+
+
+FLTR <- data$year == 2019
+ggplot(data = data[FLTR,], mapping = aes(x = model, y = price)) + 
+  geom_boxplot()
+
+
+data %>%
+  select(transmission, tax) %>% 
+  group_by(transmission) %>% 
+  summarise(tax = mean(tax))
+
+
+barplot(table(data$transmission), las = 2)
+
+```
